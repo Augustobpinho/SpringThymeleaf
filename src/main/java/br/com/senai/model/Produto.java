@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Produto {
@@ -11,10 +14,23 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotNull (message = "Campo obrigatório")
+	@Size(min =  2, max = 254, message="Nome deve conter entre 5 e 254 caracteres")
 	private String nome;
+	
+	@Min(0)
 	private int quantidade;
+	
+	@Min(0)
 	private double preco;
+	
+	@NotNull (message = "Campo obrigatório")
+	@Size(min =  2, max = 254, message="Nome deve conter entre 5 e 254 caracteres")
 	private String descricaoProduto;
+	
+	@NotNull (message = "Campo obrigatório")
+	@Size(min =  2, max = 254, message="Nome deve conter entre 5 e 254 caracteres")
 	private String urlImagem;
 	
 	public Long getId() {
