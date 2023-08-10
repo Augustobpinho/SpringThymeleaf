@@ -2,6 +2,8 @@ package br.com.senai.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,11 +53,23 @@ public class ProdutoController {
 		public String paginaAtualizarProduto(@PathVariable("id") Long id, Model model) {
 			Produto produto = produtoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Identificador do produto é inválido" + id));
 			model.addAttribute("produto", produto);
+			return "editar_produto";
+		}
+		
+		@PostMapping("/atualizar/{id}")
+		public String atualizarProduto(@PathVariable("id") long id, @Valid Produto produto, BindingResult result, Model model) {
+			if(result.hasErrors() ) {
+				produto.setId(id);
+				return"editar_produto";
+			}
+			produtoRepository.save(produto);
 			return "redirect:/produto";
 		}
 	
 	
-	
+
+		
+		
 		
 }
 
